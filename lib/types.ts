@@ -1,5 +1,5 @@
 // Types mirror the Mongoose models from the Node.js backend.
-// Kept in sync with: src/models/Application.js, Organisation.js, InstitutionPartner.js
+// Kept in sync with: src/models/Application.js
 
 export type ResourceKey = "institutions" | "applications" | "organisations"
 
@@ -52,33 +52,32 @@ export type Organisation = {
 }
 
 // ── Application ───────────────────────────────────────────────────────────────
-// Mirrors Application.js schema exactly.
-
 export type ApplicationRecord = {
   _id: string
 
   step1?: {
-    // Program / joining
     joiningDate?: string
     program?: string
     photoUrl?: string
     photoUrlPublicId?: string
 
-    // Personal
     firstName?: string
     lastName?: string
     middleName?: string
+
     passportNumber?: string
+    aadharPanNumber?: string
+
     gender?: string
     age?: string
     dateOfBirth?: string
+    cityStateCountryOfBirth?: string
+
     mobilePhone?: string
     homePhone?: string
     studentEmail?: string
     parentEmail?: string
-    cityStateCountryOfBirth?: string
 
-    // Citizenship
     citizenshipStatus?: string
     permanentResident?: string
     alienRegistration?: string
@@ -92,6 +91,7 @@ export type ApplicationRecord = {
       country?: string
       postalCode?: string
     }
+
     billingInformation?: {
       firstName?: string
       lastName?: string
@@ -100,6 +100,7 @@ export type ApplicationRecord = {
       city?: string
       state?: string
     }
+
     useSameAddressForBilling?: boolean | string
   }
 
@@ -107,6 +108,12 @@ export type ApplicationRecord = {
     fullName?: string
     phoneNumber?: string
     relation?: string
+    email?: string
+    addressLine?: string
+    city?: string
+    state?: string
+    pincode?: string
+    country?: string
   }>
 
   academics?: {
@@ -136,6 +143,8 @@ export type ApplicationRecord = {
   }
 
   personalStatement?: string
+  personalStatementMethod?: string
+  personalStatementFileUrl?: string
 
   campusSecurity?: {
     criminalConviction?: boolean | string
@@ -145,10 +154,24 @@ export type ApplicationRecord = {
 
   studentAgreement?: {
     agreed?: boolean | string
+    signatureUrl?: string
     signedDate?: string
   }
 
   checklist?: {
+    // Boolean confirmation flags
+    passportPhotos?:             boolean | string
+    registrationFeePaid?:        boolean | string
+    passportCopy?:               boolean | string
+    healthCertificate?:          boolean | string
+    policeClearanceCertificate?: boolean | string
+    recommendationLetters?:      boolean | string
+    personalStatementSubmitted?: boolean | string
+    transcriptsSubmitted?:       boolean | string
+    highSchoolDiplomaSubmitted?: boolean | string
+    documentsConfirmed?:         boolean | string
+
+    // Uploaded file URLs (Cloudinary)
     files?: {
       passportPhotos?:             string[]
       passportCopy?:               string
@@ -157,13 +180,19 @@ export type ApplicationRecord = {
       transcriptsSubmitted?:       string
       highSchoolDiplomaSubmitted?: string
     }
-    documentsConfirmed?: boolean | string
   }
 
   agentInformation?: {
     name?: string
-    contactInformation?: string
     agentNumber?: string
+    contactInformation?: string
+    hearAboutUs?: {
+      facebook?: boolean | string
+      instagram?: boolean | string
+      google?: boolean | string
+      others?: boolean | string
+      othersSpecify?: string
+    }
   }
 
   status: string
